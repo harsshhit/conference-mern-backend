@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -7,13 +8,10 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect(
-    process.env.MNG,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MNG, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
@@ -35,15 +33,12 @@ const User = mongoose.model("User", UserSchema);
 
 app.get("/conferences", async (req, res) => {
   try {
-    const conferences = await Conference.find().select(
-      "name date schedule feedback"
-    );
+    const conferences = await Conference.find().select("name date schedule feedback");
     res.json(conferences);
   } catch (err) {
     res.status(500).json({ message: "Error fetching conferences" });
   }
 });
-
 
 app.post("/register", async (req, res) => {
   const { name, email, conferenceId } = req.body;
@@ -148,7 +143,6 @@ app.delete("/admin/registration/:id", async (req, res) => {
     res.status(500).json({ error: "Error deleting registration" });
   }
 });
-
 
 // Basic error handling middleware
 app.use((err, req, res, next) => {
