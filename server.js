@@ -8,7 +8,7 @@ app.use(cors());
 
 mongoose
   .connect(
-    "mongodb+srv://monumou912:4gIALbSZytfwSZCD@cluster0.43rlfgh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    process.env.MNG,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
